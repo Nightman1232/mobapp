@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PENTADO_Lab2.MainPage"
+             BackgroundColor="#05070F">
+
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="SpaceGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#0B0E1A" Offset="0.0" />
+            <GradientStop Color="#12162B" Offset="0.5" />
+            <GradientStop Color="#0A0C18" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#151B33" Offset="0.0" />
+            <GradientStop Color="#1C2445" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#4B3C9E" Offset="0.0" />
+            <GradientStop Color="#6B4EFF" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Resources>
+
+    <Grid>
+        <!-- Subtle space background -->
+        <BoxView Color="#05070F" />
+
+        <ScrollView>
+            <VerticalStackLayout Padding="24" Spacing="28">
+
+                <!-- TOTAL P/PERSON Card -->
+                <Border StrokeShape="RoundRectangle 20"
+                        Background="{StaticResource CardGradient}"
+                        Padding="24"
+                        Stroke="#2A3358"
+                        StrokeThickness="1.5">
+
+                    <Grid ColumnDefinitions="*,Auto,*"
+                          ColumnSpacing="16">
+
+                        <!-- Left side -->
+                        <VerticalStackLayout Grid.Column="0"
+                                             VerticalOptions="Center"
+                                             Spacing="6">
+                            <Label Text="TOTAL P/PERSON"
+                                   TextColor="#7DD3FC"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   CharacterSpacing="1.2"
+                                   HorizontalOptions="Center" />
+                            <Label x:Name="TotalPerPersonLabel"
+                                   Text="$0.00"
+                                   TextColor="White"
+                                   FontSize="40"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+
+                        <!-- Divider -->
+                        <BoxView Grid.Column="1"
+                                 WidthRequest="1.5"
+                                 Color="#3B4570"
+                                 VerticalOptions="Fill"
+                                 Margin="0,8" />
+
+                        <!-- Right side -->
+                        <VerticalStackLayout Grid.Column="2"
+                                             VerticalOptions="Center"
+                                             Spacing="14">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="SUBTOTAL"
+                                       TextColor="#94A3B8"
+                                       FontSize="11"
+                                       FontAttributes="Bold"
+                                       CharacterSpacing="1" />
+                                <Label x:Name="SubtotalLabel"
+                                       Text="$0.00"
+                                       TextColor="#E0F2FE"
+                                       FontSize="17"
+                                       FontAttributes="Bold" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="TIP"
+                                       TextColor="#94A3B8"
+                                       FontSize="11"
+                                       FontAttributes="Bold"
+                                       CharacterSpacing="1" />
+                                <Label x:Name="TipAmountLabel"
+                                       Text="$0.00"
+                                       TextColor="#C4B5FD"
+                                       FontSize="17"
+                                       FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Enter your bill -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="✦  Enter your bill"
+                           TextColor="#94A3B8"
+                           FontSize="14" />
+                    <Border StrokeShape="RoundRectangle 12"
+                            BackgroundColor="#111827"
+                            Stroke="#2A3358"
+                            StrokeThickness="1"
+                            Padding="4">
+                        <Entry x:Name="BillEntry"
+                               Placeholder="0.00"
+                               Keyboard="Numeric"
+                               TextColor="#E0F2FE"
+                               BackgroundColor="Transparent"
+                               PlaceholderColor="#64748B"
+                               FontSize="18"
+                               HeightRequest="46"
+                               TextChanged="OnBillChanged" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Choose your tip -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="✦  Choose your tip"
+                           TextColor="#94A3B8"
+                           FontSize="14" />
+
+                    <Grid ColumnDefinitions="*,*,*"
+                          ColumnSpacing="12">
+                        <Button Grid.Column="0"
+                                Text="10%"
+                                Background="{StaticResource ButtonGradient}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                CornerRadius="14"
+                                HeightRequest="54"
+                                Clicked="OnTipPercentClicked"
+                                CommandParameter="10" />
+                        <Button Grid.Column="1"
+                                Text="15%"
+                                Background="{StaticResource ButtonGradient}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                CornerRadius="14"
+                                HeightRequest="54"
+                                Clicked="OnTipPercentClicked"
+                                CommandParameter="15" />
+                        <Button Grid.Column="2"
+                                Text="20%"
+                                Background="{StaticResource ButtonGradient}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                CornerRadius="14"
+                                HeightRequest="54"
+                                Clicked="OnTipPercentClicked"
+                                CommandParameter="20" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Tip Slider -->
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="TipPercentLabel"
+                           Text="Tip: 0%"
+                           TextColor="#A78BFA"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                    <Slider x:Name="TipSlider"
+                            Minimum="0"
+                            Maximum="100"
+                            Value="0"
+                            MinimumTrackColor="#8B5CF6"
+                            MaximumTrackColor="#1E293B"
+                            ThumbColor="#C4B5FD"
+                            ValueChanged="OnTipSliderChanged" />
+                </VerticalStackLayout>
+
+                <!-- Split the total -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="✦  Split the total"
+                           TextColor="#94A3B8"
+                           FontSize="14" />
+
+                    <Grid ColumnDefinitions="Auto,*,Auto"
+                          HeightRequest="50">
+
+                        <Button Grid.Column="0"
+                                Text="−"
+                                Background="{StaticResource ButtonGradient}"
+                                TextColor="White"
+                                FontSize="26"
+                                FontAttributes="Bold"
+                                WidthRequest="58"
+                                CornerRadius="14"
+                                Clicked="OnDecreaseSplit" />
+
+                        <Border Grid.Column="1"
+                                BackgroundColor="#111827"
+                                Stroke="#2A3358"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 0"
+                                Margin="0">
+                            <Label x:Name="SplitLabel"
+                                   Text="1"
+                                   TextColor="#E0F2FE"
+                                   FontSize="22"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+
+                        <Button Grid.Column="2"
+                                Text="+"
+                                Background="{StaticResource ButtonGradient}"
+                                TextColor="White"
+                                FontSize="26"
+                                FontAttributes="Bold"
+                                WidthRequest="58"
+                                CornerRadius="14"
+                                Clicked="OnIncreaseSplit" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Decorative space footer -->
+                <Label Text="✧  ✦  ★  ✦  ✧"
+                       TextColor="#334155"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       Margin="0,12,0,0" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
